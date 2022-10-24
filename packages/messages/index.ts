@@ -1,5 +1,5 @@
 import { withInstall } from '../utils'
-import _Messages from './Messages'
+import _Messages from './messages'
 import _MessageImage from './Image'
 import _MessageFile from './File'
 import _MessageText from './Text'

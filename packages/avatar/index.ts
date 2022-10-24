@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import Avatar from './Avatar'
+import Avatar from './avatar'
 import './index.less'
 
 Avatar.install = (app: App) => {
