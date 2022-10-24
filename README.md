@@ -5,7 +5,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/free-imui">
-    <img src="https://img.shields.io/npm/v/free-imui?color=c95f8b&amp;label=" alt="NPM version" />
+    <img src="https://img.shields.io/npm/v/free-imui?color=c95f8b&label=" alt="NPM version" />
   </a>
 </p>
 
@@ -16,6 +16,7 @@
 <br>
 
 ## 特性
+
 - 不依赖任何第三方组件库
 - Typescript类型支持
 - 可任意扩展聊天消息类型
@@ -23,11 +24,12 @@
 <br>
 
 ## 安装
-### vite
-```bash
-npm i -S free-imui
-```
 
+### vite
+
+```bash
+npm i -S free-imui-x
+```
 
 ```ts
 // main.js or main.ts
@@ -57,4 +59,5 @@ const userInfo = {
 ```
 
 ## License
+
 [MIT](./LICENSE) License &copy; 2022-PRESENT [King](https://github.com/kinggq)

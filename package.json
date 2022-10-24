@@ -1,6 +1,6 @@
 {
-  "name": "free-imui",
-  "version": "0.1.22",
+  "name": "free-imui-x",
+  "version": "0.1.23",
   "private": false,
   "description": "基于VUE3实现的即时通讯UI组件",
   "main": "dist/index.umd.min.js",
