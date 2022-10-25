@@ -74,7 +74,7 @@ export default defineComponent({
         })
 
         const allUnread = computed(() => {
-            let unread =  0
+            let unread = 0
             lastMessages.value.forEach(contact => {
                 unread += contact.unread
             })
@@ -90,11 +90,11 @@ export default defineComponent({
                 }}>
                     {
                         menu.key === 'messages' ?
-                        <free-badge unread={ allUnread.value }>
-                           { menu.render() }
-                        </free-badge> : menu.render() 
+                            <free-badge unread={allUnread.value}>
+                                {menu.render()}
+                            </free-badge> : menu.render()
                     }
-                    
+
                 </div>
                 !menu.bottom ? top.push(node) : bottom.push(node)
             })
@@ -114,7 +114,7 @@ export default defineComponent({
             return (
                 <div class="free-menu">
                     <div class="free-menu-top">
-                        <free-avatar v-show={ props.menuAvatar } class="free-menu-avatar" avatar={ props.userInfo.avatar } />
+                        <free-avatar v-show={props.menuAvatar} class="free-menu-avatar" avatar={props.userInfo.avatar} />
                         {renderMenuItem().top}
                     </div>
                     <div class="free-menu-bottom">
@@ -148,7 +148,7 @@ export default defineComponent({
                     contacts.value.push(contact)
                 }
             })
-            
+
             sortContacts()
         }
 
@@ -167,10 +167,10 @@ export default defineComponent({
             currentContactId.value = contactId
             emit('change-contact', currentContact.value)
 
-            if(!messagesBucket.has(contactId)) {
+            if (!messagesBucket.has(contactId)) {
                 pullMessages(() => {
-                    if (msgRef.value){
-                        
+                    if (msgRef.value) {
+
                         msgRef.value.scrollToBottom()
                     }
                 })
@@ -187,10 +187,10 @@ export default defineComponent({
             const click = (contact: Contact) => {
                 updateUnread(contact)
                 currentContactId.value = contact.id
-                if(!messagesBucket.has(contact.id)) {
+                if (!messagesBucket.has(contact.id)) {
                     pullMessages(() => {
-                        if (msgRef.value){
-                            
+                        if (msgRef.value) {
+
                             msgRef.value.scrollToBottom()
                         }
                     })
@@ -202,7 +202,7 @@ export default defineComponent({
 
             return lastMessages.value.map(contact => {
                 return (
-                    <free-contact {...activeClass(contact.id, currentContactId.value)} onClick={() => {click(contact)}} contact={contact} is-message />
+                    <free-contact {...activeClass(contact.id, currentContactId.value)} onClick={() => { click(contact) }} contact={contact} is-message />
                 )
             })
         }
@@ -214,7 +214,7 @@ export default defineComponent({
 
 
         function pullMessages(isEnd?: (end: boolean) => void) {
-            
+
             const contact = currentContact.value!
             if (!messagesBucket.has(contact.id))
                 messagesBucket.set(contact.id, [])
@@ -222,20 +222,20 @@ export default defineComponent({
             if (lockBucket.has(contact.id)) return
 
             const len = messagesBucket.has(contact.id) ? messagesBucket.get(contact.id)?.length : 0
-            
+
             loadingBucket.set(contact.id, true)
-            
+
             lockBucket.set(contact.id, true)
 
             emit('pull-messages', contact, async (messages: Message[], end?: boolean) => {
-                
-                if(messages.length === 0) {
-                    
+
+                if (messages.length === 0) {
+
                 }
                 addMessage(messages, contact.id, 'unshift')
                 // messagesBucket.get(contact.id)?.unshift(...messages)
                 messageLoadedBucket.set(contact.id, end)
-                
+
                 loadingBucket.set(contact.id, false)
                 lockBucket.delete(contact.id)
                 isEnd && isEnd(!!end)
@@ -282,8 +282,8 @@ export default defineComponent({
         }
 
         const currentLoadend = computed(() => {
-            return messageLoadedBucket.has(currentContactId.value) ? 
-            messageLoadedBucket.get(currentContactId.value) : false
+            return messageLoadedBucket.has(currentContactId.value) ?
+                messageLoadedBucket.get(currentContactId.value) : false
         })
 
         const currentLoading = computed(() => {
@@ -323,13 +323,13 @@ export default defineComponent({
             message: Message,
             next: (contact: Contact) => void,
             file?: File
-        ){
+        ) {
             emit('send', contact, message, (message: Message, contact: Contact, status: MessageStatus = 'success') => {
                 next(contact)
                 updateMessage(Object.assign(message, { status }))
             }, file)
         }
-        
+
         function updateMessage(message: UpdateMessage) {
             if (messagesBucket.has(message.toContactId)) {
                 const index = messagesBucket.get(message.toContactId)?.findIndex(item => item.id === message.id)
@@ -337,7 +337,7 @@ export default defineComponent({
                     const findMessage = messagesBucket.get(message.toContactId)![index!]
                     messagesBucket.get(message.toContactId)![index!] = { ...findMessage, ...message, toContactId: findMessage.toContactId }
                 }
-                
+
             }
         }
 
@@ -375,7 +375,7 @@ export default defineComponent({
                     lastMessageTime: message.time,
                     lastMessage: lastMessageRender(message)
                 })
-                
+
             } else {
                 addMessage(message, message.toContactId, 'push')
                 const updateContactData = {
@@ -399,7 +399,7 @@ export default defineComponent({
         }
 
         function addMessage(message: Message | Message[], contactId: string | number, type: 'unshift' | 'push') {
-            if (!isArray(message)) message = [ message ]
+            if (!isArray(message)) message = [message]
             messagesBucket.set(contactId, messagesBucket.get(contactId) || [])
             messagesBucket.get(contactId)![type](...message)
         }
@@ -422,24 +422,21 @@ export default defineComponent({
             const imageTypes = ['image/png', 'image/jpeg', 'image/gif']
             let image
             if (imageTypes.includes(file.type)) {
-                image = {
-                    content: URL.createObjectURL(file),
-                    type: 'image'
-                }
-            } else {
-                image = {
-                    type: 'file',
-                    fileSize: file.size,
-                    fileName: file.name,
-                    content: ''
+                var fileReader = new FileReader()
+                fileReader.readAsDataURL(file)
+                fileReader.onload = () => {
+                    console.log(fileReader.result, 'upload result')
+                    image = {
+                        content: fileReader.result,
+                        type: 'image'
+                    }
+                    const message = createMessage(image)
+                    appendMessage(message)
+                    if (!currentContact.value) return
+                    _emitSend(currentContact.value, message, (contact) => {
+                    }, file)
                 }
             }
-            const message = createMessage(image)
-            appendMessage(message)
-            if (!currentContact.value) return
-            _emitSend(currentContact.value, message, (contact) => {
-
-            }, file)
         }
 
         function renderContent() {
@@ -468,7 +465,7 @@ export default defineComponent({
 
                             </div>
                             <div class="free-contact-detail_footer">
-                                <free-button type="primary" onClick={ click }>发送</free-button>
+                                <free-button type="primary" onClick={click}>发送</free-button>
                             </div>
                         </div>
                     )
@@ -476,12 +473,12 @@ export default defineComponent({
                     return (
                         <div class="free-contact-main">
                             <div class="free-contact-messages_header">
-                                <span>{ currentContact.value.nickname }</span>
+                                <span>{currentContact.value.nickname}</span>
                                 <i class="free-icon-more"></i>
                             </div>
                             <div class="free-contact-messages_body">
-                                <free-messages ref={ msgRef } onLoad={ pullMessages } messageName={ props.messageName } data={ messagesBucket.get(currentContact.value.id) } is-end={ currentLoadend.value } loading={ currentLoading.value } />
-                                <free-editor contact={ currentContact.value } onSend={ handleSend } onUpload={ handleUpload }/>
+                                <free-messages ref={msgRef} onLoad={pullMessages} messageName={props.messageName} data={messagesBucket.get(currentContact.value.id)} is-end={currentLoadend.value} loading={currentLoading.value} />
+                                <free-editor contact={currentContact.value} onSend={handleSend} onUpload={handleUpload} />
                             </div>
                         </div>
                     )
@@ -510,7 +507,7 @@ export default defineComponent({
         return () => {
             return (
                 <div class={`free-wrapper free-theme-default`} style={wrapper_style}>
-                    
+
                     {
                         props.showMenu && renderMenu()
                     }

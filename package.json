@@ -1,8 +1,13 @@
 {
-  "name": "free-imui-x",
-  "version": "0.1.23",
+  "name": "free-imui-neo",
+  "version": "0.1.25",
   "private": false,
   "description": "基于VUE3实现的即时通讯UI组件",
+  "homepage": "https://moonholder.github.io/free-imui/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moonholder/free-imui.git"
+  },
   "main": "dist/index.umd.min.js",
   "types": "dist/index.d.ts",
   "keyword": "vue3 imui typescript",
@@ -27,7 +32,8 @@
     "serve": "vue-cli-service serve",
     "build": "yarn build:clean && yarn build:lib",
     "build:clean": "rimraf lib",
-    "build:lib": "vue-cli-service build --target lib --name index packages/index.ts"
+    "build:lib": "vue-cli-service build --target lib --name index packages/index.ts",
+    "build:doc": "vue-cli-service build"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -42,7 +48,6 @@
     "@vue/cli-plugin-typescript": "~4.5.13",
     "@vue/cli-service": "~4.5.13",
     "@vue/compiler-sfc": "^3.0.0",
-    "babel-loader": "^8.2.5",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "typescript": "4.1.5",

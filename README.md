@@ -28,13 +28,13 @@
 ### vite
 
 ```bash
-npm i -S free-imui-x
+npm i -S free-imui-neo
 ```
 
 ```ts
 // main.js or main.ts
-import FreeIMUI from 'free-imui'
-import 'free-imui/dist/index.css'
+import FreeIMUI from 'free-imui-neo'
+import 'free-imui-neo/dist/index.css'
 
 const app = createApp(App)
 
@@ -52,8 +52,8 @@ app.mount('#app')
 //当前登录人
 const userInfo = {
   id: '66',
-  nickname: '陈翔',
-  avatar: '陈翔',
+  nickname: '',
+  avatar: '',
 }
 </script>
 ```
