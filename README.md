@@ -5,12 +5,12 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/free-imui">
-    <img src="https://img.shields.io/npm/v/free-imui?color=c95f8b&label=" alt="NPM version" />
+    <img src="https://img.shields.io/badge/-v0.1.26-ff69b4" alt="NPM version" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://kinggq.github.io/free-imui/">🧑‍💻 Interactive Docs <sup>Beta</sup></a>
+  <a href="https://moonholder.github.io/free-imui/">🧑‍💻 Interactive Docs <sup>Beta</sup></a>
 </p>
 
 <br>

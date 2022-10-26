@@ -444,6 +444,12 @@ const handleShowMenu = () => {
           <td></td>
         </tr>
         <tr>
+          <td>change-contact-message</td>
+          <td>切换联系人消息时触发</td>
+          <td>(currentContact: Contact): void</td>
+          <td></td>
+        </tr>
+        <tr>
           <td>pull-messages</td>
           <td>聊天窗口滚动到顶部时或首次打开该联系人窗口时触发。调用 next 方法结束 loading 状态，设置 end 为 true 将不在触发该事件</td>
           <td>(contact: Contact, next: PullMessageNext) => void</td>
@@ -459,7 +465,7 @@ const handleShowMenu = () => {
           <td>send</td>
           <td>发送消息时触发</td>
           <td>
-            (contact: Contact, message: Message, next: SendNext) => void
+            (contact: Contact, message: Message, next: SendNext, file: File) => void
           </td>
           <td></td>
         </tr>

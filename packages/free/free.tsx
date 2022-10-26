@@ -198,6 +198,7 @@ export default defineComponent({
                     loadingBucket.set(contact.id, false)
                     msgRef.value?.scrollToBottom()
                 }
+                emit('change-contact-message', currentContact.value)
             }
 
             return lastMessages.value.map(contact => {
@@ -350,6 +351,10 @@ export default defineComponent({
                 if (isString(unread)) {
                     if (unread.indexOf('+') === 0 || unread.indexOf('-') === 0) {
                         data.unread = parseInt(unread) + contacts.value[index].unread
+                    } else if (unread.length === 0) {
+                        data.unread = 0
+                    } else {
+                        data.unread = parseInt(data.unread)
                     }
                 }
                 // if (data.unread) {
@@ -420,23 +425,34 @@ export default defineComponent({
 
         const handleUpload = (file: File) => {
             const imageTypes = ['image/png', 'image/jpeg', 'image/gif']
-            let image
+            let message
             if (imageTypes.includes(file.type)) {
                 var fileReader = new FileReader()
                 fileReader.readAsDataURL(file)
                 fileReader.onload = () => {
-                    console.log(fileReader.result, 'upload result')
-                    image = {
+                    message = {
                         content: fileReader.result,
                         type: 'image'
                     }
-                    const message = createMessage(image)
-                    appendMessage(message)
-                    if (!currentContact.value) return
-                    _emitSend(currentContact.value, message, (contact) => {
-                    }, file)
+                    _emitUploadSend(message, file)
+                } 
+            } else {
+                message = {
+                    type: 'file',
+                    fileSize: file.size,
+                    fileName: file.name,
+                    content: ''
                 }
+                _emitUploadSend(message, file)
             }
+        }
+
+        function _emitUploadSend(_message: any, file: File) {
+            const message = createMessage(_message)
+            appendMessage(message)
+            if (!currentContact.value) return
+            _emitSend(currentContact.value, message, (contact) => {
+            }, file)
         }
 
         function renderContent() {
